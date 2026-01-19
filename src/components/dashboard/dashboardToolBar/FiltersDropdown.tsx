@@ -18,7 +18,7 @@ const FiltersDropdown: React.FC<FiltersDropdownProps> = ({ handleActiveFilter })
     <select
       value={activeFilter}
       onChange={(e) => onActiveFilter(e.target.value as 'active' | 'favourites' | 'closed')}
-      className="px-4 py-2 border rounded"
+      className="px-4 py-2 rounded"
     >
       <option value="active">Active Applications</option>
       <option value="favourites">Favourite</option>

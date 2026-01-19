@@ -28,9 +28,9 @@ const DashboardToolBar: React.FC<DashboardToolBarProps> = ({
   const dispatch = useAppDispatch();
 
   return (
-    <div className="p-2 bg-[#E8E8E8] shadow-[0_4px_8px_0_rgba(0,0,0,0.20)]]">
+    <div className="px-4 py-3 bg-[#E8E8E8] shadow-[0_4px_8px_0_rgba(0,0,0,0.20)]]">
       <div className="lg:flex lg:items-center lg:justify-between">
-        <h1 className="text-black font-[Poppins] text-[20px] font-bold leading-[21.942px] lg:block hidden">Dashboard</h1>
+        <h1 className="text-blacktext-[20px] font-bold leading-[21.942px] lg:block hidden">My Applications</h1>
         <div className="lg:flex lg:space-x-4 lg:block hidden">
         <Filters handleActiveFilter={handleFilterChange} />
         </div>
@@ -39,7 +39,7 @@ const DashboardToolBar: React.FC<DashboardToolBarProps> = ({
         </div>
         <div className="lg:hidden flex justify-between">
           <FiltersDropdown handleActiveFilter={handleFilterChange} />
-          <div className="text-lg font-semibold mt-2">{total}</div>
+          <div className="text-[#777] text-center text-[25px] font-bold leading-[130%] tracking-[-0.96px]">{total}</div>
         </div>
       </div>
     </div>

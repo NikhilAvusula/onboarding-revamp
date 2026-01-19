@@ -149,7 +149,6 @@ const Dashboard: React.FC = () => {
   };
 
   const handleSearchChange = (searchText: string) => {
-    console.log("Search text:", searchText);
     setSearchQuery(searchText);
     
     if (searchText.trim() === '') {

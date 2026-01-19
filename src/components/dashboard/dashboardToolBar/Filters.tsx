@@ -19,7 +19,7 @@ const Filters: React.FC<FiltersProps> = ({ handleActiveFilter }) => {
       <button
         onClick={() => onActiveFilter('active')}
       >
-        <p className={`text-[#3A3A3A] font-[Poppins] text-[18px] leading-[21.942px]
+        <p className={`text-[#3A3A3A] text-[18px] leading-[21.942px]
                     ${activeFilter === 'active' ? 'font-bold' : 'font-normal'}`}>Active Applications</p>
       </button>
       <button

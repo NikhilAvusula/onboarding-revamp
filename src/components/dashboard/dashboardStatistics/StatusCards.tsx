@@ -35,7 +35,7 @@ const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
   return (
     <div>
       {/* Desktop View - Cards - 2 per row */}
-      <div className="hidden lg:grid lg:grid-cols-2 lg:gap-20">
+      <div className="hidden lg:grid lg:grid-cols-2 lg:gap-15">
         {filteredStatsData.map((item) => (
           <div key={item.id}>
             <Card

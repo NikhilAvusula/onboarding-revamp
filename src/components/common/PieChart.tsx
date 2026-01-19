@@ -12,14 +12,16 @@ export interface PieChartData {
 export interface PieChartProps {
   data: PieChartData[];
   total: number;
-  size?: number;
+  height?: number;
+  width?: number;
   className?: string;
 }
 
 const PieChart: React.FC<PieChartProps> = ({ 
   data, 
   total, 
-  size = 256, 
+  height = 256, 
+  width = 256, 
   className = '' 
 }) => {
   const getStatusColor = (status: string): string => {
@@ -73,7 +75,7 @@ const PieChart: React.FC<PieChartProps> = ({
 
   return (
     <div className={`relative ${className}`}>
-      <div style={{ width: size, height: size, minWidth: 0, minHeight: 0 }}>
+      <div style={{ width: width, height: height-35, minWidth: 0, minHeight: 0 }}>
         <ResponsiveContainer width="100%" height="100%">
           <RechartsPieChart>
             <Pie
@@ -82,8 +84,8 @@ const PieChart: React.FC<PieChartProps> = ({
               cy="50%"
               labelLine={false}
               label={renderCustomizedLabel}
-              outerRadius={size * 0.4}
-              innerRadius={size * 0.25}
+              outerRadius={height * 0.4}
+              innerRadius={height * 0.2}
               fill="#8884d8"
               dataKey="applications"
             >
@@ -98,8 +100,7 @@ const PieChart: React.FC<PieChartProps> = ({
       {/* Center content */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="text-center">
-          <div className="text-3xl font-bold text-gray-800">{total}</div>
-          <div className="text-sm text-gray-600">Applications</div>
+          <div className="text-[#777] text-center font-poppins text-[48px] font-bold leading-[130%] tracking-[-0.96px]">{total}</div>
         </div>
       </div>
     </div>

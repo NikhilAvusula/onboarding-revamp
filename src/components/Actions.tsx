@@ -17,15 +17,15 @@ const Actions: React.FC<ActionsProps> = ({
   handleProfile,
 }) => {
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-2 ">
       <div onClick={handleContact} className="text-white font-poppins text-sm font-medium leading-[29px]">
         <div className="text-[var(--white)]">Contact Us</div>
       </div>
       <div onClick={handleNotification} className="p-2">
-        <Image src={NotificationsIcon} alt="Notifications" width={20} height={20} />
+        <Image src={NotificationsIcon} alt="Notifications" width={30} height={30} />
       </div>
       <div onClick={handleProfile} className="p-2">
-        <User size={20} color={`var(--white)`}/>
+        <User size={25} color={`var(--white)`}/>
       </div>
     </div>
   );

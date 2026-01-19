@@ -46,6 +46,15 @@ const MobileTable: React.FC<MobileTableProps> = ({
     resizable: false,
   }));
 
+  // Row style function to apply background colors
+  const getRowStyle = (params: any) => {
+    const rowIndex = params.node.rowIndex;
+    if (rowIndex % 2 === 1) {
+      return { backgroundColor: '#F6F6F6' };
+    }
+    return { backgroundColor: 'rgba(204, 204, 204, 0.47)' };
+  };
+
   return (
     <div className={`w-full overflow-hidden ${className}`}>
       <style jsx>{`
@@ -113,6 +122,7 @@ const MobileTable: React.FC<MobileTableProps> = ({
           suppressRowVirtualisation={true}
           enableCellTextSelection={true}
           theme="legacy"
+          getRowStyle={getRowStyle}
         />
       </div>
     </div>

@@ -11,7 +11,7 @@ interface DashboardStatisticsProps {
 const DashboardStatistics: React.FC<DashboardStatisticsProps> = ({ getMerchants }) => {
   return (
     <div className="lg:mb-4 lg:px-10 lg:py-6 px-2 py-0 ">
-      <div className="lg:flex justify-between lg:space-x-4">
+      <div className="lg:flex justify-between">
         <div className="lg:block hidden">
           <OverallApplications />
         </div>

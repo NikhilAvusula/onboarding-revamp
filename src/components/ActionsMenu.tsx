@@ -36,7 +36,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
           <span>Contact Us</span>
         </button>
         <button onClick={handleNotification} className="flex items-center space-x-2 w-full p-2 hover:bg-gray-100 rounded">
-          <Image src={NotificationsIcon} alt="Notifications" width={20} height={20} color={"black"}/>
+          <Bell size={20} />
           <span>Notifications</span>
         </button>
         <button onClick={handleProfile} className="flex items-center space-x-2 w-full p-2 hover:bg-gray-100 rounded">

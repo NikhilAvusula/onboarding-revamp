@@ -8,7 +8,6 @@ import { CategoryStats } from '@/src/models/dashboardModels';
 const OverallApplications: React.FC = () => {
   const { activeFilter, statsData } = useAppSelector((state) => state.dashboard);
 
-  console.log("statsData>>>>",statsData)
   const filteredStats = useMemo(() => {
     const activeData = statsData.find(item => item.category === activeFilter);
     return activeData?.statsData ?? [];
@@ -21,7 +20,7 @@ const OverallApplications: React.FC = () => {
 
 
   return (
-    <div className="p-4 border rounded">
+    <div className="p-4 border border-[#777777] rounded-lg bg-[#F6F6F6] w-[27vw]">
       <h2 className="text-lg font-semibold">
         {activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Applications
       </h2>
@@ -29,7 +28,8 @@ const OverallApplications: React.FC = () => {
         <PieChart 
           data={filteredStats} 
           total={total}
-          size={225}
+          width={370}
+          height={250}
         />
       </div>
     </div>

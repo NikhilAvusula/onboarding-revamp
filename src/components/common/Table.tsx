@@ -37,7 +37,7 @@ const Table: React.FC<TableProps> = ({
 
   const getRowStyle = (params: any) => {
     return {
-      backgroundColor: params.node.rowIndex % 2 === 0 ? '#f9fafb' : '#f3f4f6',
+      backgroundColor: params.node.rowIndex % 2 === 0 ? '#F6F6F6' : 'rgba(204, 204, 204, 0.47)',
     };
   };
 

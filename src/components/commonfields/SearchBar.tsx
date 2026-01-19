@@ -27,7 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSearchChange, value = '' })
         src={searchIcon}
         alt="search"
         width={20}
-        height={20}
+        height={15}
         className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
       />
     </div>
