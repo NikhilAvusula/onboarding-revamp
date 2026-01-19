@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+
+:root {
+  --white: #ffffff;
+  --primary:#452BB5;
+  --secondary:#0085FF;
+  --headerbg:#333333;
+  --merchantHeaderbg:#44059D;
+}
+
+body {
+  /* background: var(--background);
+  color: var(--foreground); */
+  font-family: Arial, Helvetica, sans-serif;
+}
