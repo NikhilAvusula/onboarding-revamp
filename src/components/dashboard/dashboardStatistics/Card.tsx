@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { getStatusColor } from '../../../utils';
+import { useAppDispatch, useAppSelector } from '@/src/redux/store';
+import { updateActiveStatus } from '@/src/redux/reducers/dashboardReducer';
 
 interface CardProps {
   statusData: {
@@ -10,16 +12,18 @@ interface CardProps {
     time: string;
     applications: number;
   };
-  handleSelectStatus: (status: string) => void;
-  isActive: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ statusData, handleSelectStatus, isActive }) => {
+const Card: React.FC<CardProps> = ({ statusData }) => {
+  const {activeStatus} = useAppSelector((state) => state.dashboard);
+  const dispatch = useAppDispatch();
   const colors = getStatusColor(statusData.status);
 
   const onSelectStatus = () => {
-    handleSelectStatus(statusData.status);
+    dispatch(updateActiveStatus(statusData.status));
   };
+
+  const isActive = activeStatus === statusData.status
 
   return (
     <div

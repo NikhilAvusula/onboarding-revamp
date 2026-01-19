@@ -26,4 +26,6 @@ export interface DashboardState {
   statsData: CategoryStats[];
   merchantsList: MerchantItem[];
   activeStatus: string;
+  searchQuery: string;
+  searchedMerchantsList: MerchantItem[];
 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/src/redux/store';
-import { updateStatsData, updateMerchantsList, updateActiveFilter, updateActiveStatus } from '@/src/redux/reducers/dashboardReducer';
+import { updateStatsData, updateMerchantsList, updateActiveFilter, updateActiveStatus, updateSearchedMerchantsList, updateSearchQuery } from '@/src/redux/reducers/dashboardReducer';
 import ApiService from '@/src/services/service';
 import DashboardToolBar from './dashboardToolBar/DashboardToolBar';
 import DashboardStatistics from './dashboardStatistics/DashboardStatistics';
@@ -15,21 +15,10 @@ import { CategoryStats, MerchantItem } from '@/src/models/dashboardModels';
 import { ColDef } from 'ag-grid-community';
 
 const Dashboard: React.FC = () => {
-  const [originalMerchantsList, setOriginalMerchantsList] = React.useState<MerchantItem[]>([]);
-  const [searchQuery, setSearchQuery] = React.useState('');
   const dispatch = useAppDispatch();
-  const { merchantsList, activeStatus } = useAppSelector((state) => state.dashboard);
+  const { merchantsList, activeStatus, activeFilter,searchedMerchantsList } = useAppSelector((state) => state.dashboard);
 
   const apiService = new ApiService();
-
-  // Filter merchantsList based on activeStatus
-  //once data from api comes based on status and filter this is not required
-  const filteredMerchantsList = useMemo(() => {
-    if (activeStatus) {
-      return merchantsList.filter((merchant: MerchantItem) => merchant.stage === activeStatus);
-    }
-    return merchantsList;
-  }, [merchantsList, activeStatus]);
 
   // Define table columns for merchants
   const tableColumns: ColDef[] = useMemo(() => [
@@ -120,49 +109,23 @@ const Dashboard: React.FC = () => {
       // dispatch(updateStatsData(response.data));
 
        // Dispatch entire statsData from data file, not from Redux state
-      console.log("Dispatching full statsData from data file:", mockStatsData);
       dispatch(updateStatsData(mockStatsData as CategoryStats[]));
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
   };
 
-  const getMerchantsList = async (status?:string) => {
-    console.log("status>>>>",status)  
+  const getMerchantsList = async (status?:string) => {  
     try {
       // const response = await apiService.getMerchantsList(status);
       // dispatch(updateMerchantsList(response.data));
       dispatch(updateMerchantsList(mockMerchantsList as MerchantItem[]));
-      // Store original list for search functionality
-      setOriginalMerchantsList(mockMerchantsList as MerchantItem[]);
+      dispatch(updateSearchedMerchantsList(mockMerchantsList as MerchantItem[]));
     } catch (error) {
       console.error('Error fetching merchants:', error);
     }
   };
-
-  const handleFilterChange = (activeFilter: 'active' | 'favourites' | 'closed') => {
-    console.log("Filter changed to:", activeFilter);
-    dispatch(updateActiveFilter(activeFilter));
-    dispatch(updateActiveStatus(''));
-    getStats(activeFilter);
-    getMerchantsList();
-  };
-
-  const handleSearchChange = (searchText: string) => {
-    setSearchQuery(searchText);
-    
-    if (searchText.trim() === '') {
-      // If search is empty, restore original merchants list
-      dispatch(updateMerchantsList(originalMerchantsList));
-    } else {
-      // Filter from original list, not from already filtered list
-      const filtered = originalMerchantsList.filter(merchant =>
-        merchant.merchantName.toLowerCase().includes(searchText.toLowerCase()));
-      dispatch(updateMerchantsList(filtered));
-    }
-  };
   
-
   const statusColor = getStatusColor(activeStatus);
 
   useEffect(() => {
@@ -170,25 +133,32 @@ const Dashboard: React.FC = () => {
     getMerchantsList();
   }, []);
 
+  useEffect(() => {
+    dispatch(updateActiveStatus(''));
+    dispatch(updateSearchQuery(''));
+    getStats(activeFilter);
+    getMerchantsList();
+  }, [activeFilter]);
+
+  useEffect(()=>{
+    getMerchantsList(activeStatus);
+  },[activeStatus])
+
   return (
     <div>
-      <DashboardToolBar
-        handleFilterChange={handleFilterChange}
-        handleSearchChange={handleSearchChange}
-        searchValue={searchQuery}
-      />
-      <DashboardStatistics getMerchants={getMerchantsList} />
+      <DashboardToolBar/>
+      <DashboardStatistics/>
       <div className="lg:block hidden lg:px-10">
         <Table
-          data={filteredMerchantsList}
+          data={searchedMerchantsList}
           columns={tableColumns}
-          headerColor={getStatusColor(activeStatus).border}
+          headerColor={statusColor.border}
           styles={{borderRadius:'10px',height :400}}
         />
       </div>
       <div className="lg:hidden py-2 flex justify-between">
         <MobileTable
-          data={filteredMerchantsList}
+          data={searchedMerchantsList}
           columns={mobileColumns}
           headerColor={statusColor.border}
           headerHeight={45}

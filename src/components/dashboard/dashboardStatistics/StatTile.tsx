@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { getStatusColor } from '@/src/utils';
+import { useAppDispatch, useAppSelector } from '@/src/redux/store';
+import { updateActiveStatus } from '@/src/redux/reducers/dashboardReducer';
 
 interface StatTileProps {
   statusData: {
@@ -10,16 +12,18 @@ interface StatTileProps {
     time: string;
     applications: number;
   };
-  handleSelectStatus: (status: string) => void;
-  isActive: boolean;
 }
 
-const StatTile: React.FC<StatTileProps> = ({ statusData, handleSelectStatus, isActive }) => {
+const StatTile: React.FC<StatTileProps> = ({ statusData }) => {
+  const dispatch = useAppDispatch();
+  const {activeStatus} = useAppSelector((state) => state.dashboard);
   const colors = getStatusColor(statusData.status);
 
   const onSelectStatus = () => {
-    handleSelectStatus(statusData.status);
+    dispatch(updateActiveStatus(statusData.status));;
   };
+
+  const isActive = activeStatus === statusData.status;
 
   return (
     <div

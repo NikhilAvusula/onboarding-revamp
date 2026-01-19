@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useAppSelector, useAppDispatch } from '@/src/redux/store';
 import { updateActiveStatus } from '@/src/redux/reducers/dashboardReducer';
 import Card from './Card';
@@ -8,29 +8,15 @@ import StatTile from './StatTile';
 import { CategoryStats } from '@/src/models/dashboardModels';
 
 interface StatusCardsProps {
-  getMerchants: (status?:string) => void;
 }
 
-const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
-  const dispatch = useAppDispatch();
-  const { statsData, activeFilter, activeStatus: reduxActiveStatus } = useAppSelector((state) => state.dashboard);
-  const [activeStatus, setActiveStatus] = useState(reduxActiveStatus || '');
-
-  // Sync local activeStatus with Redux state when it changes
-  useEffect(() => {
-    setActiveStatus(reduxActiveStatus || '');
-  }, [reduxActiveStatus]);
+const StatusCards: React.FC<StatusCardsProps> = ({ }) => {
+  const { statsData, activeFilter, activeStatus } = useAppSelector((state) => state.dashboard);
 
   const filteredStatsData = useMemo(() => {
     const activeData = statsData.find((item: CategoryStats) => item.category === activeFilter);
     return activeData?.statsData ?? [];
   }, [statsData, activeFilter]);
-
-  const handleSelectStatus = (status: string) => {
-    getMerchants(status);
-    setActiveStatus(status);
-    dispatch(updateActiveStatus(status));
-  };
 
   return (
     <div>
@@ -40,8 +26,6 @@ const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
           <div key={item.id}>
             <Card
               statusData={item}
-              handleSelectStatus={handleSelectStatus}
-              isActive={activeStatus === item.status}
             />
           </div>
         ))}
@@ -69,8 +53,6 @@ const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
             >
               <StatTile
                 statusData={item}
-                handleSelectStatus={handleSelectStatus}
-                isActive={activeStatus === item.status}
               />
             </div>
           ))}

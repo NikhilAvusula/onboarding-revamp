@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import { updateActiveFilter } from '@/src/redux/reducers/dashboardReducer';
+import { useAppDispatch, useAppSelector } from '@/src/redux/store';
+import React from 'react';
 
 interface FiltersDropdownProps {
-  handleActiveFilter: (activeFilter: 'active' | 'favourites' | 'closed') => void;
 }
 
-const FiltersDropdown: React.FC<FiltersDropdownProps> = ({ handleActiveFilter }) => {
-  const [activeFilter, setActiveFilter] = useState<'active' | 'favourites' | 'closed'>('active');
+const FiltersDropdown: React.FC<FiltersDropdownProps> = ({ }) => {
+  const {activeFilter} = useAppSelector((state) => state.dashboard);
+  const dispatch = useAppDispatch();
 
   const onActiveFilter = (filter: 'active' | 'favourites' | 'closed') => {
-    handleActiveFilter(filter);
-    setActiveFilter(filter);
+    dispatch(updateActiveFilter(filter));
   };
 
   return (

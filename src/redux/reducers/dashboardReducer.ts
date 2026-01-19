@@ -7,6 +7,8 @@ const initialState: DashboardState = {
   statsData: [],
   merchantsList: [],
   activeStatus: '',
+  searchQuery:'',
+  searchedMerchantsList: [],
 };
 
 const dashboardSlice = createSlice({
@@ -25,8 +27,14 @@ const dashboardSlice = createSlice({
     updateActiveStatus(state, action: PayloadAction<string>) {
       state.activeStatus = action.payload;
     },
+    updateSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
+    updateSearchedMerchantsList(state, action: PayloadAction<MerchantItem[]>) {
+      state.searchedMerchantsList = action.payload;
+    },
   },
 });
 
-export const { updateActiveFilter, updateStatsData, updateMerchantsList, updateActiveStatus } = dashboardSlice.actions;
+export const { updateActiveFilter, updateStatsData, updateMerchantsList, updateActiveStatus, updateSearchQuery, updateSearchedMerchantsList } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
