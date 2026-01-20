@@ -8,9 +8,11 @@ import SearchBar from '../../commonfields/SearchBar';
 import FiltersDropdown from './FiltersDropdown';
 
 interface DashboardToolBarProps {
+  handleFilterChange?: (activeFilter: 'active' | 'favourites' | 'closed') => void;
 }
 
 const DashboardToolBar: React.FC<DashboardToolBarProps> = ({
+  handleFilterChange
 }) => {
   const {statsData,activeFilter,merchantsList,searchQuery} = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
@@ -39,13 +41,13 @@ const DashboardToolBar: React.FC<DashboardToolBarProps> = ({
       <div className="lg:flex lg:items-center lg:justify-between">
         <h1 className="text-blacktext-[20px] font-bold leading-[21.942px] lg:block hidden">My Applications</h1>
         <div className="lg:flex lg:space-x-4 lg:block hidden">
-        <Filters />
+        <Filters handleFilterChange={handleFilterChange}/>
         </div>
         <div className="lg:flex lg:space-x-4 lg:block hidden">
           <SearchBar handleSearchChange={handleSearchChange} value={searchQuery} />
         </div>
         <div className="lg:hidden flex justify-between">
-          <FiltersDropdown />
+          <FiltersDropdown handleFilterChange={handleFilterChange}/>
           <div className="text-[#777] text-center text-[25px] font-bold leading-[130%] tracking-[-0.96px]">{total}</div>
         </div>
       </div>

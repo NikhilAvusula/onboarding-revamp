@@ -5,15 +5,16 @@ import { useAppDispatch, useAppSelector } from '@/src/redux/store';
 import React from 'react';
 
 interface FiltersProps {
-  
+  handleFilterChange?: (activeFilter: 'active' | 'favourites' | 'closed') => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ }) => {
+const Filters: React.FC<FiltersProps> = ({ handleFilterChange }) => {
   const {activeFilter} = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
 
   const onActiveFilter = (filter: 'active' | 'favourites' | 'closed') => {
     dispatch(updateActiveFilter(filter));
+    handleFilterChange?.(filter);
   };
 
   return (

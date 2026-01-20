@@ -128,26 +128,22 @@ const Dashboard: React.FC = () => {
   
   const statusColor = getStatusColor(activeStatus);
 
+  const handleFilterChange = (activeFilter: 'active' | 'favourites' | 'closed') => {
+    dispatch(updateActiveStatus(''));
+    dispatch(updateSearchQuery(''));
+    getStats(activeFilter);
+    getMerchantsList();
+  };
+
   useEffect(() => {
     getStats('active');
     getMerchantsList();
   }, []);
 
-  useEffect(() => {
-    dispatch(updateActiveStatus(''));
-    dispatch(updateSearchQuery(''));
-    getStats(activeFilter);
-    getMerchantsList();
-  }, [activeFilter]);
-
-  useEffect(()=>{
-    getMerchantsList(activeStatus);
-  },[activeStatus])
-
   return (
     <div>
-      <DashboardToolBar/>
-      <DashboardStatistics/>
+      <DashboardToolBar handleFilterChange={handleFilterChange}/>
+      <DashboardStatistics getMerchants={getMerchantsList}/>
       <div className="lg:block hidden lg:px-10">
         <Table
           data={searchedMerchantsList}
