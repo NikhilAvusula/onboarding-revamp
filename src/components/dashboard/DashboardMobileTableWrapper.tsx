@@ -2,6 +2,8 @@ import React, { useMemo } from 'react'
 import MobileTable from '../common/MobileTable'
 import { useAppSelector } from '@/src/redux/store'
 import { getStatusColor } from '@/src/utils'
+import starIcon from '@/src/assets/icons/starIcon.svg'
+import Image from 'next/image'
 
 const DashboardMobileTableWrapper = () => {
     const {searchedMerchantsList,activeStatus} = useAppSelector((state) => state.dashboard)
@@ -9,6 +11,17 @@ const DashboardMobileTableWrapper = () => {
 
     // Define mobile table columns for merchants
       const mobileColumns = useMemo(() => [
+        {
+          field: 'isFavourite',
+          header: '',
+          width: 30,
+          minWidth: 50,
+          render: (value: boolean) => (
+            value ? (
+                <Image src={starIcon} alt="Favorite" className="w-4 h-4" />
+            ) : null
+          ),
+        },
         {
           field: 'merchantName',
           header: 'Merchant Name',

@@ -19,6 +19,7 @@ export interface MerchantItem {
   stage: string;
   merchantName: string;
   contactName: string;
+  isFavourite:boolean;
 }
 
 export interface DashboardState {

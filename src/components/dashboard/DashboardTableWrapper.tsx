@@ -3,6 +3,8 @@ import Table from '../common/Table'
 import { useAppSelector } from '@/src/redux/store'
 import { getStatusColor } from '@/src/utils'
 import { ColDef } from 'ag-grid-community'
+import starIcon from '@/src/assets/icons/starIcon.svg'
+import Image from 'next/image'
 
 const DashboardTableWrapper = () => {
     const {searchedMerchantsList,activeStatus} = useAppSelector((state) => state.dashboard)
@@ -11,6 +13,17 @@ const DashboardTableWrapper = () => {
 
      // Define table columns for merchants
     const tableColumns: ColDef[] = useMemo(() => [
+    {
+        headerName: '',
+        field: 'isFavourite',
+        width: 10,
+        cellClass: 'flex items-center justify-center',
+        cellRenderer: (params: { value: boolean }) => (
+        params.value ? (
+          <Image src={starIcon} alt="Favorite" className="w-6 h-6" />
+        ) : null
+        ),
+    },
     {
         headerName: 'Merchant Name',
         field: 'merchantName',

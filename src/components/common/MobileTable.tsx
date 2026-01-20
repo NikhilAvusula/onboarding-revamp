@@ -18,6 +18,8 @@ export interface MobileTableProps {
   columns: {
     field: string;
     header: string;
+    width?: number;
+    minWidth?: number;
     render?: (value: any) => React.ReactNode;
   }[];
   headerColor?: string;
@@ -38,8 +40,9 @@ const MobileTable: React.FC<MobileTableProps> = ({
   const agGridColumns: ColDef[] = columns.map(col => ({
     headerName: col.header,
     field: col.field,
+    width: col.width,
     flex: 1,
-    minWidth: 150,
+    minWidth: col.minWidth || col.width || 150,
     cellRenderer: col.render ? (params: any) => col.render!(params.value) : undefined,
     headerClass: 'mobile-header',
     cellClass: 'mobile-cell',
@@ -84,6 +87,15 @@ const MobileTable: React.FC<MobileTableProps> = ({
           padding: 8px 12px !important;
           font-size: 14px !important;
           border-bottom: 1px solid #f3f4f6 !important;
+        }
+        .ag-cell[col-id="isFavourite"] {
+          display:flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 60px !important;
+          width: 60px !important;
+          max-width: 60px !important;
+          flex: 0 0 60px !important;
         }
         .ag-theme-alpine {
           border: 1px solid #e5e7eb;
