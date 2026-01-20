@@ -8,10 +8,10 @@ import StatTile from './StatTile';
 import { CategoryStats } from '@/src/models/dashboardModels';
 
 interface StatusCardsProps {
-  getMerchants: (status?:string) => void;
+  
 }
 
-const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
+const StatusCards: React.FC<StatusCardsProps> = ({ }) => {
   const { statsData, activeFilter, activeStatus } = useAppSelector((state) => state.dashboard);
 
   const filteredStatsData = useMemo(() => {
@@ -27,7 +27,6 @@ const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
           <div key={item.id}>
             <Card
               statusData={item}
-              getMerchants={getMerchants}
             />
           </div>
         ))}
@@ -55,7 +54,6 @@ const StatusCards: React.FC<StatusCardsProps> = ({ getMerchants }) => {
             >
               <StatTile
                 statusData={item}
-                getMerchants={getMerchants}
               />
             </div>
           ))}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '@/src/redux/store';
+import { useAppDispatch, useAppSelector } from '@/src/redux/store';
 import { updateStatsData, updateMerchantsList, updateActiveStatus, updateSearchedMerchantsList, updateSearchQuery } from '@/src/redux/reducers/dashboardReducer';
 import ApiService from '@/src/services/service';
 import DashboardToolBar from './dashboardToolBar/DashboardToolBar';
@@ -11,8 +11,10 @@ import DashboardMobileTableWrapper from './DashboardMobileTableWrapper';
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [isInitialized, setIsInitialized] = React.useState(false);
 
   const apiService = new ApiService();
+  const {activeStatus,activeFilter} = useAppSelector((state) => state.dashboard);
 
   const getStats = async(activeFilter?: 'active' | 'favourites' | 'closed') => {
     try {
@@ -36,22 +38,30 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleFilterChange = (activeFilter: 'active' | 'favourites' | 'closed') => {
-    dispatch(updateActiveStatus(''));
-    dispatch(updateSearchQuery(''));
-    getStats(activeFilter);
-    getMerchantsList();
-  };
 
   useEffect(() => {
     getStats('active');
     getMerchantsList();
+    setIsInitialized(true);
   }, []);
+
+  useEffect(() =>{
+    if(isInitialized){
+      getMerchantsList(activeStatus);
+    }
+  },[activeStatus])
+
+  useEffect(()=>{
+    if(isInitialized){
+      getStats(activeFilter);
+      getMerchantsList();
+    }
+  },[activeFilter])
 
   return (
     <div>
-      <DashboardToolBar handleFilterChange={handleFilterChange}/>
-      <DashboardStatistics getMerchants={getMerchantsList}/>
+      <DashboardToolBar/>
+      <DashboardStatistics />
       <div className="lg:block hidden lg:px-10">
         <DashboardTableWrapper />
       </div>

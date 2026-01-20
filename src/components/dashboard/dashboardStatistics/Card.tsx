@@ -12,17 +12,15 @@ interface CardProps {
     time: string;
     applications: number;
   };
-  getMerchants: (status?:string) => void;
 }
 
-const Card: React.FC<CardProps> = ({ statusData, getMerchants }) => {
+const Card: React.FC<CardProps> = ({ statusData }) => {
   const {activeStatus} = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
   const colors = getStatusColor(statusData.status);
 
   const onSelectStatus = () => {
     dispatch(updateActiveStatus(statusData.status));
-    getMerchants(statusData.status);
   };
 
   const isActive = activeStatus === statusData.status

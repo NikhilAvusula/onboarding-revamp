@@ -12,17 +12,15 @@ interface StatTileProps {
     time: string;
     applications: number;
   };
-  getMerchants: (status?:string) => void;
 }
 
-const StatTile: React.FC<StatTileProps> = ({ statusData, getMerchants }) => {
+const StatTile: React.FC<StatTileProps> = ({ statusData }) => {
   const dispatch = useAppDispatch();
   const {activeStatus} = useAppSelector((state) => state.dashboard);
   const colors = getStatusColor(statusData.status);
 
   const onSelectStatus = () => {
     dispatch(updateActiveStatus(statusData.status));
-    getMerchants(statusData.status);
   };
 
   const isActive = activeStatus === statusData.status;
