@@ -103,13 +103,10 @@ const Dashboard: React.FC = () => {
     },
   ], []);
 
-  const getStats = (activeFilter?: 'active' | 'favourites' | 'closed') => {
+  const getStats = async(activeFilter?: 'active' | 'favourites' | 'closed') => {
     try {
-      // const response = await apiService.getStats(activeFilter);
-      // dispatch(updateStatsData(response.data));
-
-       // Dispatch entire statsData from data file, not from Redux state
-      dispatch(updateStatsData(mockStatsData as CategoryStats[]));
+      const response = await apiService.getStats();
+      dispatch(updateStatsData(response?.data || []));
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
@@ -117,10 +114,12 @@ const Dashboard: React.FC = () => {
 
   const getMerchantsList = async (status?:string) => {  
     try {
-      // const response = await apiService.getMerchantsList(status);
-      // dispatch(updateMerchantsList(response.data));
-      dispatch(updateMerchantsList(mockMerchantsList as MerchantItem[]));
-      dispatch(updateSearchedMerchantsList(mockMerchantsList as MerchantItem[]));
+       const payload ={
+        status: status
+      }
+      const response = await apiService.getMerchantsList();
+      dispatch(updateMerchantsList(response?.data));
+      dispatch(updateSearchedMerchantsList(response?.data || []));
     } catch (error) {
       console.error('Error fetching merchants:', error);
     }
