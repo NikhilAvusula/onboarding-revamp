@@ -56,7 +56,7 @@ const MobileTable: React.FC<MobileTableProps> = ({
   };
 
   return (
-    <div className={`w-full overflow-hidden ${className}`}>
+    <div className={`w-[100vw] overflow-hidden ${className}`}>
       <style jsx>{`
         .mobile-header {
           background-color: ${headerColor} !important;
@@ -108,7 +108,7 @@ const MobileTable: React.FC<MobileTableProps> = ({
         }
         .ag-theme-alpine .ag-center-cols-container {
           min-width: 300px; /* Ensure at least 2 columns visible */
-        }
+        }      
       `}</style>
       <div className="ag-theme-alpine" style={{ height: 'auto', minHeight: '200px' }}>
         <AgGridReact
